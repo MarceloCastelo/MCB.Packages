@@ -74,6 +74,7 @@ We will create the container with config:
 
 | Name | Value |
 |---|---|
+| Image | postgres |
 | Name | xxx-postgres |
 | Hostname | xxx-postgres |
 | Username | postgres |

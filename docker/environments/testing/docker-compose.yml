@@ -1,4 +1,19 @@
 version: '3'
+
+networks:
+  target_network:
+    external:
+      name: ${environment_name}
+
 services:
   hello:
-    image: "hello-world"
+    container_name: ${environment_name}-postgres
+    hostname: "${environment_name}-postgres"
+    ports: 
+      - ${environment_port_prefix}000:5432
+    environment: 
+      POSTGRES_PASSWORD: "postgres"
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.0.2
+    image: "postgres"
