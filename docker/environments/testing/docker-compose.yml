@@ -6,7 +6,8 @@ networks:
       name: ${environment_name}
 
 services:
-  hello:
+  # Databases and Caches
+  postgresql:
     container_name: ${environment_name}-postgres
     hostname: "${environment_name}-postgres"
     ports: 
@@ -17,3 +18,28 @@ services:
       target_network:
         ipv4_address: 172.${ip_second_octect}.0.2
     image: "postgres"
+  mongodb:
+    container_name: ${environment_name}-mongo
+    hostname: "${environment_name}-mongo"
+    ports: 
+      - ${environment_port_prefix}001:27017
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "admin"
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.0.3
+    image: "mongo"
+  # Other Apps
+  pgadmin4:
+    container_name: ${environment_name}-pgadmin4
+    hostname: "${environment_name}-pgadmin4"
+    ports: 
+      - ${environment_port_prefix}500:80
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: "postgres"
+      PGADMIN_DEFAULT_PASSWORD: "postgres"
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.10.2
+    image: "dpage/pgadmin4"

@@ -11,6 +11,13 @@ This project are divided in four environments. Wen call environment name of **{e
 
 Each environment have your own network, ports and ip address range.
 
+## **Links**
+
+### Development
+
+1. Database and Caches
+- pgAdmin4 (<a href="http://localhost:6500" target="_blank">link</a>)
+
 ## **Networks**
 
 Each environment have your own network with the pattern: 172.xx.0.2 to 172.xx.255.255 where we call xx of **{ip_second_octect}**.
@@ -79,11 +86,32 @@ We will create the container with config:
 | Hostname | xxx-postgres |
 | Username | postgres |
 | Password | postgres |
-| Port binding | y000:5432 |
+| IP | 172.yyyy.0.2 |
+| Port binding | z000:5432 |
 
 **where**:
 - **xxx**: {environment_name}
-- **y**: {environment_port_prefix}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}
+
+### **MongoDB**
+
+We will create the container with config:
+
+| Name | Value |
+|---|---|
+| Image | mongo |
+| Name | xxx-mongodb |
+| Hostname | xxx-mongodb |
+| Username | admin |
+| Password | admin |
+| IP | 172.yyyy.0.3 |
+| Port binding | z001:27017 |
+
+**where**:
+- **xxx**: {environment_name}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}
 
 ## **Queues**
 
@@ -102,3 +130,22 @@ We will create the container with config:
 
 
 ## **Other Apps**
+
+### **pgAdmin**
+
+We will create the container with config:
+
+| Name | Value |
+|---|---|
+| Image | dpage/pgadmin4 |
+| Name | xxx-pgadmin4 |
+| Hostname | xxx-pgadmin4 |
+| Username | postgres |
+| Password | postgres |
+| IP | 172.yyyy.10.2 |
+| Port binding | z500:80 |
+
+**where**:
+- **xxx**: {environment_name}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}
