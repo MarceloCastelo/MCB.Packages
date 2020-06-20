@@ -17,6 +17,7 @@ Each environment have your own network, ports and ip address range.
 
 1. Database and Caches
 - pgAdmin4 (<a href="http://localhost:6500" target="_blank">link</a>)
+- mongoclient (<a href="http://localhost:6502" target="_blank">link</a>)
 
 ## **Networks**
 
@@ -144,6 +145,23 @@ We will create the container with config:
 | Password | postgres |
 | IP | 172.yyyy.10.2 |
 | Port binding | z500:80 |
+
+**where**:
+- **xxx**: {environment_name}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}
+
+### **MongoClient**
+
+We will create the container with config:
+
+| Name | Value |
+|---|---|
+| Image | mongoclient/mongoclient |
+| Name | xxx-mongoclient |
+| Hostname | xxx-mongoclient |
+| IP | 172.yyyy.10.3 |
+| Port binding | z502:3000  |
 
 **where**:
 - **xxx**: {environment_name}

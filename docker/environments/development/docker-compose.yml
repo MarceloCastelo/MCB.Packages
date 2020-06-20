@@ -43,3 +43,12 @@ services:
       target_network:
         ipv4_address: 172.${ip_second_octect}.10.2
     image: "dpage/pgadmin4"
+  mongoclient:
+    container_name: ${environment_name}-mongoclient
+    hostname: "${environment_name}-mongoclient"
+    ports: 
+      - ${environment_port_prefix}502:3000
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.10.3
+    image: "mongoclient/mongoclient"
