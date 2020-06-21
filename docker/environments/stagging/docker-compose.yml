@@ -8,8 +8,8 @@ networks:
 services:
   # Databases and Caches
   postgresql:
-    container_name: ${environment_name}-postgres
-    hostname: "${environment_name}-postgres"
+    container_name: ${environment_name}-postgresql
+    hostname: "${environment_name}-postgresql"
     ports: 
       - ${environment_port_prefix}000:5432
     environment: 
@@ -19,8 +19,8 @@ services:
         ipv4_address: 172.${ip_second_octect}.0.2
     image: "postgres"
   mongodb:
-    container_name: ${environment_name}-mongo
-    hostname: "${environment_name}-mongo"
+    container_name: ${environment_name}-mongodb
+    hostname: "${environment_name}-mongodb"
     ports: 
       - ${environment_port_prefix}001:27017
     environment: 
@@ -30,15 +30,29 @@ services:
       target_network:
         ipv4_address: 172.${ip_second_octect}.0.3
     image: "mongo"
+  ravendb:
+    container_name: ${environment_name}-ravendb
+    hostname: "${environment_name}-ravendb"
+    ports: 
+      - ${environment_port_prefix}002:38888
+      - ${environment_port_prefix}503:8080
+    environment: 
+      RAVEN_Setup_Mode: "None"
+      RAVEN_License_Eula_Accepted: "true"
+      RAVEN_Security_UnsecuredAccessAllowed: "PrivateNetwork"
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.0.4
+    image: "ravendb/ravendb"
   # Other Apps
   pgadmin4:
-    container_name: ${environment_name}-pgadmin4
-    hostname: "${environment_name}-pgadmin4"
+    container_name: ${environment_name}-pgadmin
+    hostname: "${environment_name}-pgadmin"
     ports: 
       - ${environment_port_prefix}500:80
     environment: 
-      PGADMIN_DEFAULT_EMAIL: "postgres"
-      PGADMIN_DEFAULT_PASSWORD: "postgres"
+      PGADMIN_DEFAULT_EMAIL: "admin"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
     networks:
       target_network:
         ipv4_address: 172.${ip_second_octect}.10.2
