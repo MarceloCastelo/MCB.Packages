@@ -1,5 +1,25 @@
 # **Environment Setup**
 
+Default requirements:
+- Docker
+- Docker network's ip ranges available
+  - 172.18.xxx.xxx for developer network
+  - 172.19.xxx.xxx for testing network
+  - 172.20.xxx.xxx for stagging network
+  - 172.21.xxx.xxx for production network
+  
+- Docker network's port ranges available
+  - 6000 to 6999 for developer mappings
+  - 7000 to 7999 for testing mappings
+  - 8000 to 8999 for stagging mappings
+  - 9000 to 9999 for production mappings
+  
+Edtit **up-env-xxx.ps1** file (where xxx is environment name. e.g.: up-env-development.ps1) to change the default environment IPs and ports mappings. To see all up-env-xxx.ps1 files following this [link](scripts).
+
+Execute the following steps t setup all environments:
+
+# **Environment Details**
+
 This project are divided in four environments. Wen call environment name of **{environment_name}**
 
 | Description | {environment_name} |
@@ -122,6 +142,23 @@ We will create the container with config:
 | IP | 172.yyyy.0.4 |
 | Port binding | z002:38888 |
 | Port binding | z503:8080 |
+
+**where**:
+- **xxx**: {environment_name}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}
+
+### **Prometheus**
+
+We will create the container with config:
+
+| Name | Value |
+|---|---|
+| Image | prom/prometheus |
+| Name | xxx-prometheus |
+| Hostname | xxx-prometheus |
+| IP | 172.yyyy.0.5 |
+| Port binding | z003:9090 |
 
 **where**:
 - **xxx**: {environment_name}

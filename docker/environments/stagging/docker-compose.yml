@@ -44,6 +44,15 @@ services:
       target_network:
         ipv4_address: 172.${ip_second_octect}.0.4
     image: "ravendb/ravendb"
+  prometheus:
+    container_name: ${environment_name}-prometheus
+    hostname: "${environment_name}-prometheus"
+    ports: 
+      - ${environment_port_prefix}003:9090
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.0.5
+    image: "prom/prometheus"
   # Other Apps
   pgadmin4:
     container_name: ${environment_name}-pgadmin
