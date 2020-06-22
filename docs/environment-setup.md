@@ -14,7 +14,7 @@ Default requirements:
   - 8000 to 8999 for stagging mappings
   - 9000 to 9999 for production mappings
   
-Edtit **up-env-xxx.ps1** file (where xxx is environment name. e.g.: up-env-development.ps1) to change the default environment IPs and ports mappings. To see all up-env-xxx.ps1 files following this [link](scripts).
+Edtit **up-env-xxx.ps1** file (where xxx is environment name. e.g.: up-env-development.ps1) to change the default environment IPs and ports mappings. To see all up-env-xxx.ps1 files following this [link](./../docker/scripts).
 
 Execute the following steps t setup all environments:
 
