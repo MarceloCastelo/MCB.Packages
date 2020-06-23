@@ -4,7 +4,4 @@ $environment_name = "production"
 $ip_second_octect = 21
 $environment_port_prefix = 9
 
-.\up-env-base.ps1
-
-# stop all containers
-docker ps -q | ForEach-Object { docker stop $_ }
+.\create-env-base.ps1

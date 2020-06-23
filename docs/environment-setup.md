@@ -23,18 +23,18 @@ Edtit **up-env-xxx.ps1** file (where xxx is environment name. e.g.: up-env-devel
 In repository root folder, aopen the powershell with admin permission and run de following code to setup all environments:
 
 1. <code>cd docker\scripts</code>
-2. <code>.\up-env-all.ps1</code>
+2. <code>.\create-env-all.ps1</code>
 
 To setup individual environment, go to scripts folder like previous step 1 and run one of the following commands in Powershell:
 
 - Development
-  - <code>.\up-env-development.ps1</code>
+  - <code>.\create-env-development.ps1</code>
 - Testing
-  - <code>.\up-env-testing.ps1</code>
+  - <code>.\create-env-testing.ps1</code>
 - Stagging
-  - <code>.\up-env-stagging.ps1</code>
+  - <code>.\create-env-stagging.ps1</code>
 - Production
-  - <code>.\up-env-production.ps1</code>
+  - <code>.\create-env-production.ps1</code>
 
 # **Environment Details**
 
