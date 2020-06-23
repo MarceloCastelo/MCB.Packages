@@ -2,6 +2,9 @@ Write-Output "create network"
 docker network create --subnet=172.${ip_second_octect}.0.0/16 ${environment_name}
 
 Write-Output "set variables"
+
+$docker_volume = "C:\docker\volumes"
+
 .\set-env-base-variables.ps1
 
 Write-Output "create volume directories"

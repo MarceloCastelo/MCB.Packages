@@ -1,8 +1,5 @@
-
 $postgresql_container_name="postgresql"
 $mongodb_container_name="mongodb"
-
-
 
 Set-Location ..\environments\${environment_name}
 
