@@ -1,12 +1,13 @@
 Write-Output "create network"
 docker network create --subnet=172.${ip_second_octect}.0.0/16 ${environment_name}
 
-Set-Location ..\environments\${environment_name}
+Write-Output "set variables"
+.\set-env-base-variables.ps1
 
-Clear-Content .\.env
-Add-Content .\.env "environment_name=${environment_name}"
-Add-Content .\.env "ip_second_octect=${ip_second_octect}"
-Add-Content .\.env "environment_port_prefix=${environment_port_prefix}"
+Write-Output "create volume directories"
+$docker_volume_path = Join-Path -Path "${docker_volume}" -ChildPath "${environment_name}"
+New-Item -ItemType Directory -Force -Path "$docker_volume_path"
+
 
 docker-compose.exe up -d
 

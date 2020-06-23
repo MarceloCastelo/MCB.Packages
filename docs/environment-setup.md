@@ -36,6 +36,10 @@ To setup individual environment, go to scripts folder like previous step 1 and r
 - Production
   - <code>.\create-env-production.ps1</code>
 
+### **Base Variables**
+
+To set base variables, go to [set-env-base-variables.ps1](./../docker/scripts/set-env-base-variables.ps1)
+
 # **Environment Details**
 
 This project are divided in four environments. Wen call environment name of **{environment_name}**
@@ -57,6 +61,8 @@ Each environment have your own network, ports and ip address range.
 - pgAdmin (<a href="http://localhost:6500" target="_blank">link</a>)
 - MongoClient (<a href="http://localhost:6502" target="_blank">link</a>)
 - RavenDB (<a href="http://localhost:6503" target="_blank">link</a>)
+- Prometheus (<a href="http://localhost:6504" target="_blank">link</a>)
+- Grafana (<a href="http://localhost:6505" target="_blank">link</a>)
 
 ## **Networks**
 
@@ -176,7 +182,7 @@ We will create the container with config:
 | Name | xxx-prometheus |
 | Hostname | xxx-prometheus |
 | IP | 172.yyyy.0.5 |
-| Port binding | z003:9090 |
+| Port binding | z504:9090 |
 
 **where**:
 - **xxx**: {environment_name}
@@ -244,4 +250,29 @@ RavenDB have our own management web interface. The web interface port **x503** a
 
 **where**:
 - **x**: {environment_port_prefix}
-- 
+
+### **Prometheus**
+
+RavenDB have our own management web interface. The web interface port **x504** are exposed by RavenDB container.
+
+**where**:
+- **x**: {environment_port_prefix}
+
+### **Grafana**
+
+We will create the container with config:
+
+| Name | Value |
+|---|---|
+| Image | grafana/grafana |
+| Name | xxx-grafana |
+| Username | admin |
+| Password | admin |
+| Hostname | xxx-grafana |
+| IP | 172.yyyy.10.4 |
+| Port binding | z505:3000  |
+
+**where**:
+- **xxx**: {environment_name}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}

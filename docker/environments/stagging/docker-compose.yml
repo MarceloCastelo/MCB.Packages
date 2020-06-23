@@ -8,12 +8,14 @@ networks:
 services:
   # Databases and Caches
   postgresql:
-    container_name: ${environment_name}-postgresql
-    hostname: "${environment_name}-postgresql"
+    container_name: ${environment_name}-${postgresql_container_name}
+    hostname: "${environment_name}-${postgresql_container_name}"
     ports: 
       - ${environment_port_prefix}000:5432
     environment: 
       POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ${docker_volume}\${environment_name}\${postgresql_container_name}:/var/lib/postgresql/data
     networks:
       target_network:
         ipv4_address: 172.${ip_second_octect}.0.2
@@ -26,6 +28,8 @@ services:
     environment: 
       MONGO_INITDB_ROOT_USERNAME: "admin"
       MONGO_INITDB_ROOT_PASSWORD: "admin"
+    volumes:
+      - ${docker_volume}\${environment_name}\${mongodb_container_name}:/data/db
     networks:
       target_network:
         ipv4_address: 172.${ip_second_octect}.0.3
@@ -48,7 +52,7 @@ services:
     container_name: ${environment_name}-prometheus
     hostname: "${environment_name}-prometheus"
     ports: 
-      - ${environment_port_prefix}003:9090
+      - ${environment_port_prefix}504:9090
     networks:
       target_network:
         ipv4_address: 172.${ip_second_octect}.0.5
@@ -75,3 +79,12 @@ services:
       target_network:
         ipv4_address: 172.${ip_second_octect}.10.3
     image: "mongoclient/mongoclient"
+  grafana:
+    container_name: ${environment_name}-grafana
+    hostname: "${environment_name}-grafana"
+    ports: 
+      - ${environment_port_prefix}505:3000
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.10.4
+    image: "grafana/grafana"
