@@ -14,10 +14,6 @@
   - 8xxx for stagging mappings
   - 9xxx for production mappings
 
-### **Change default IPs and Ports mappings**
-  
-Edtit **up-env-xxx.ps1** file (where xxx is environment name. e.g.: up-env-development.ps1) to change the default environment IPs and ports mappings. To see all up-env-xxx.ps1 files following this [link](./../docker/scripts).
-
 ### **Create Environment**
 
 In repository root folder, aopen the powershell with admin permission and run de following code to setup all environments:

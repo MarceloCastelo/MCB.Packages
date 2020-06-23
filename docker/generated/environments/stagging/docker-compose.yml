@@ -35,8 +35,8 @@ services:
         ipv4_address: 172.${ip_second_octect}.0.3
     image: "mongo"
   ravendb:
-    container_name: ${environment_name}-ravendb
-    hostname: "${environment_name}-ravendb"
+    container_name: ${environment_name}-${ravendb_container_name}
+    hostname: "${environment_name}-${ravendb_container_name}"
     ports: 
       - ${environment_port_prefix}002:38888
       - ${environment_port_prefix}503:8080
@@ -49,8 +49,8 @@ services:
         ipv4_address: 172.${ip_second_octect}.0.4
     image: "ravendb/ravendb"
   prometheus:
-    container_name: ${environment_name}-prometheus
-    hostname: "${environment_name}-prometheus"
+    container_name: ${environment_name}-${prometheus_container_name}
+    hostname: "${environment_name}-${prometheus_container_name}"
     ports: 
       - ${environment_port_prefix}504:9090
     networks:
@@ -59,8 +59,8 @@ services:
     image: "prom/prometheus"
   # Other Apps
   pgadmin4:
-    container_name: ${environment_name}-pgadmin
-    hostname: "${environment_name}-pgadmin"
+    container_name: ${environment_name}-${pgadmin_container_name}
+    hostname: "${environment_name}-${pgadmin_container_name}"
     ports: 
       - ${environment_port_prefix}500:80
     environment: 
@@ -71,8 +71,8 @@ services:
         ipv4_address: 172.${ip_second_octect}.10.2
     image: "dpage/pgadmin4"
   mongoclient:
-    container_name: ${environment_name}-mongoclient
-    hostname: "${environment_name}-mongoclient"
+    container_name: ${environment_name}-${mongoclient_container_name}
+    hostname: "${environment_name}-${mongoclient_container_name}"
     ports: 
       - ${environment_port_prefix}502:3000
     networks:
@@ -80,8 +80,8 @@ services:
         ipv4_address: 172.${ip_second_octect}.10.3
     image: "mongoclient/mongoclient"
   grafana:
-    container_name: ${environment_name}-grafana
-    hostname: "${environment_name}-grafana"
+    container_name: ${environment_name}-${grafana_container_name}
+    hostname: "${environment_name}-${grafana_container_name}"
     ports: 
       - ${environment_port_prefix}505:3000
     networks:
