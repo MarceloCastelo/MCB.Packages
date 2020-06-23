@@ -19,8 +19,8 @@ New-Item -ItemType Directory -Force -Path "$docker_volume_path"
 # copy compose file
 #
 
-#Write-Output "copy compose file"
-#Copy-Item ".\docker-compose.yml" -Destination "..\environments\${environment_name}"
+Write-Output "copy compose file"
+Copy-Item "..\templates\docker-compose.yml" -Destination "..\generated\environments\${environment_name}\docker-compose.yml"
 
 #
 # set variables
@@ -28,9 +28,10 @@ New-Item -ItemType Directory -Force -Path "$docker_volume_path"
 
 Write-Output "set variables"
 
-Set-Location ..\environments\${environment_name}
+Set-Location ..\generated\environments\${environment_name}
 
-.\set-env-base-variables.ps1
+..\..\..\scripts\set-env-base-variables.ps1
+
 docker-compose.exe up -d
 
-Set-Location ..\..\scripts | Write-Output
+Set-Location ..\..\..\scripts | Write-Output

@@ -1,7 +1,7 @@
 # **Environment Setup**
 
 ### **Requirements**
-- Docker installed and correctly running in your environment
+- Docker and Docker Compose installed and correctly running in your environment
 - Docker network's ip ranges available
   - 172.18.xxx.xxx for developer network
   - 172.19.xxx.xxx for testing network
