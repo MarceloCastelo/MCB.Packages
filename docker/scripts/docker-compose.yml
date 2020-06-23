@@ -1,0 +1,90 @@
+version: '3'
+
+networks:
+  target_network:
+    external:
+      name: ${environment_name}
+
+services:
+  # Databases and Caches
+  postgresql:
+    container_name: ${environment_name}-${postgresql_container_name}
+    hostname: "${environment_name}-${postgresql_container_name}"
+    ports: 
+      - ${environment_port_prefix}000:5432
+    environment: 
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ${docker_volume}\${environment_name}\${postgresql_container_name}:/var/lib/postgresql/data
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.0.2
+    image: "postgres"
+  mongodb:
+    container_name: ${environment_name}-mongodb
+    hostname: "${environment_name}-mongodb"
+    ports: 
+      - ${environment_port_prefix}001:27017
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "admin"
+    volumes:
+      - ${docker_volume}\${environment_name}\${mongodb_container_name}:/data/db
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.0.3
+    image: "mongo"
+  ravendb:
+    container_name: ${environment_name}-ravendb
+    hostname: "${environment_name}-ravendb"
+    ports: 
+      - ${environment_port_prefix}002:38888
+      - ${environment_port_prefix}503:8080
+    environment: 
+      RAVEN_Setup_Mode: "None"
+      RAVEN_License_Eula_Accepted: "true"
+      RAVEN_Security_UnsecuredAccessAllowed: "PrivateNetwork"
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.0.4
+    image: "ravendb/ravendb"
+  prometheus:
+    container_name: ${environment_name}-prometheus
+    hostname: "${environment_name}-prometheus"
+    ports: 
+      - ${environment_port_prefix}504:9090
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.0.5
+    image: "prom/prometheus"
+  # Other Apps
+  pgadmin4:
+    container_name: ${environment_name}-pgadmin
+    hostname: "${environment_name}-pgadmin"
+    ports: 
+      - ${environment_port_prefix}500:80
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: "admin"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.10.2
+    image: "dpage/pgadmin4"
+  mongoclient:
+    container_name: ${environment_name}-mongoclient
+    hostname: "${environment_name}-mongoclient"
+    ports: 
+      - ${environment_port_prefix}502:3000
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.10.3
+    image: "mongoclient/mongoclient"
+  grafana:
+    container_name: ${environment_name}-grafana
+    hostname: "${environment_name}-grafana"
+    ports: 
+      - ${environment_port_prefix}505:3000
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.10.4
+    image: "grafana/grafana"

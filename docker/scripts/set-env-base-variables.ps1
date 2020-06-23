@@ -1,8 +1,6 @@
 $postgresql_container_name="postgresql"
 $mongodb_container_name="mongodb"
 
-Set-Location ..\environments\${environment_name}
-
 Clear-Content .\.env
 
 Add-Content .\.env "postgresql_container_name=${postgresql_container_name}"
