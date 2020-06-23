@@ -1,7 +1,7 @@
 # **Environment Setup**
 
-Default requirements:
-- Docker
+### **Requirements**
+- Docker installed and correctly running in your environment
 - Docker network's ip ranges available
   - 172.18.xxx.xxx for developer network
   - 172.19.xxx.xxx for testing network
@@ -9,14 +9,32 @@ Default requirements:
   - 172.21.xxx.xxx for production network
   
 - Docker network's port ranges available
-  - 6000 to 6999 for developer mappings
-  - 7000 to 7999 for testing mappings
-  - 8000 to 8999 for stagging mappings
-  - 9000 to 9999 for production mappings
+  - 6xxx for developer mappings
+  - 7xxx for testing mappings
+  - 8xxx for stagging mappings
+  - 9xxx for production mappings
+
+### **Change default IPs and Ports mappings**
   
 Edtit **up-env-xxx.ps1** file (where xxx is environment name. e.g.: up-env-development.ps1) to change the default environment IPs and ports mappings. To see all up-env-xxx.ps1 files following this [link](./../docker/scripts).
 
-Execute the following steps t setup all environments:
+### **Up Environment**
+
+In repository root folder, aopen the powershell with admin permission and run de following code to setup all environments:
+
+1. <code>cd docker\scripts</code>
+2. <code>.\up-env-all.ps1</code>
+
+To setup individual environment, go to scripts folder like previous step 1 and run one of the following commands in Powershell:
+
+- Development
+  - <code>.\up-env-development.ps1</code>
+- Testing
+  - <code>.\up-env-testing.ps1</code>
+- Stagging
+  - <code>.\up-env-stagging.ps1</code>
+- Production
+  - <code>.\up-env-production.ps1</code>
 
 # **Environment Details**
 

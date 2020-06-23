@@ -10,5 +10,4 @@ Add-Content .\.env "environment_port_prefix=${environment_port_prefix}"
 
 docker-compose.exe up -d
 
-
 Set-Location ..\..\scripts | Write-Output
