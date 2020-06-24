@@ -21,9 +21,9 @@ $docker_config_path_mongodb = Join-Path -Path "${docker_config_path}" -ChildPath
 $docker_config_path_ravendb = Join-Path -Path "${docker_config_path}" -ChildPath "${ravendb_container_name}"
 $docker_config_path_prometheus = Join-Path -Path "${docker_config_path}" -ChildPath "${prometheus_container_name}"
 
-$pgadmin_container_name = Join-Path -Path "${docker_config_path}" -ChildPath "${pgadmin_container_name}"
-$mongoclient_container_name = Join-Path -Path "${docker_config_path}" -ChildPath "${mongoclient_container_name}"
-$grafana_container_name = Join-Path -Path "${docker_config_path}" -ChildPath "${grafana_container_name}"
+$docker_config_path_pgadmin = Join-Path -Path "${docker_config_path}" -ChildPath "${docker_config_path_pgadmin}"
+$docker_config_path_mongoclient = Join-Path -Path "${docker_config_path}" -ChildPath "${docker_config_path_mongoclient}"
+$docker_config_path_grafana = Join-Path -Path "${docker_config_path}" -ChildPath "${grafana_container_name}"
 
 $env_filename="..\generated\environments\${environment_name}\.env"
 
@@ -32,7 +32,13 @@ $env_filename="..\generated\environments\${environment_name}\.env"
 #
 
 Write-Output "update .env file"
-if(Test-Path -path $env_filename) { Clear-Content $env_filename }
+if(Test-Path -path $env_filename) 
+{ 
+    Clear-Content $env_filename 
+}
+else {
+    if (!(Test-Path -path "..\generated\environments\${environment_name}")) { New-Item -ItemType Directory -Force -Path "..\generated\environments\${environment_name}" }
+}
 
 Add-Content $env_filename "postgresql_container_name=${postgresql_container_name}"
 Add-Content $env_filename "mongodb_container_name=${mongodb_container_name}"
@@ -53,9 +59,9 @@ Add-Content $env_filename "docker_config_path_mongodb=${docker_config_path_mongo
 Add-Content $env_filename "docker_config_path_ravendb=${docker_config_path_ravendb}"
 Add-Content $env_filename "docker_config_path_prometheus=${docker_config_path_prometheus}"
 
-Add-Content $env_filename "pgadmin_container_name=${pgadmin_container_name}"
-Add-Content $env_filename "mongoclient_container_name=${mongoclient_container_name}"
-Add-Content $env_filename "grafana_container_name=${grafana_container_name}"
+Add-Content $env_filename "docker_config_path_pgadmin=${docker_config_path_pgadmin}"
+Add-Content $env_filename "docker_config_path_mongoclient=${docker_config_path_mongoclient}"
+Add-Content $env_filename "docker_config_path_grafana=${docker_config_path_grafana}"
 
 #
 # create config directories
@@ -144,6 +150,6 @@ Write-Output "set variables"
 
 Set-Location ..\generated\environments\${environment_name}
 
-#docker-compose.exe up -d
+docker-compose.exe up -d
 
 Set-Location ..\..\..\scripts | Write-Output

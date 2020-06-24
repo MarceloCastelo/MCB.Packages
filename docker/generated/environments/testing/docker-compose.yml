@@ -40,6 +40,9 @@ services:
     ports: 
       - ${environment_port_prefix}002:38888
       - ${environment_port_prefix}503:8080
+    volumes:
+      - ${docker_config_path_ravendb}:/opt/RavenDB/config
+      - ${docker_volume}\${environment_name}\${ravendb_container_name}:/opt/RavenDB/Server/RavenData
     environment: 
       RAVEN_Setup_Mode: "None"
       RAVEN_License_Eula_Accepted: "true"
@@ -53,6 +56,11 @@ services:
     hostname: "${environment_name}-${prometheus_container_name}"
     ports: 
       - ${environment_port_prefix}504:9090
+    volumes:
+      - ${docker_config_path_prometheus}:/prometheus
+      - ${docker_volume}\${environment_name}\${prometheus_container_name}:/data
+    command:
+      - '--config.file=/prometheus/prometheus.yml'
     networks:
       target_network:
         ipv4_address: 172.${ip_second_octect}.0.5
@@ -75,6 +83,8 @@ services:
     hostname: "${environment_name}-${mongoclient_container_name}"
     ports: 
       - ${environment_port_prefix}502:3000
+    volumes:
+      - ${docker_volume}\${environment_name}\${mongoclient_container_name}:/data/db
     networks:
       target_network:
         ipv4_address: 172.${ip_second_octect}.10.3
@@ -84,6 +94,8 @@ services:
     hostname: "${environment_name}-${grafana_container_name}"
     ports: 
       - ${environment_port_prefix}505:3000
+    volumes:
+      - ${docker_volume}\${environment_name}\${grafana_container_name}:/var/lib/grafana
     networks:
       target_network:
         ipv4_address: 172.${ip_second_octect}.10.4
