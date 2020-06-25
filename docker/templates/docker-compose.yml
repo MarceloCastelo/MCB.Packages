@@ -65,6 +65,19 @@ services:
       target_network:
         ipv4_address: 172.${ip_second_octect}.0.5
     image: "prom/prometheus"
+  # Queues
+  rabbitmq:
+    container_name: ${environment_name}-${rabbitmq_container_name}
+    hostname: "${environment_name}-${rabbitmq_container_name}"
+    ports: 
+      - ${environment_port_prefix}100:5672
+      - ${environment_port_prefix}506:15672
+    volumes:
+      - ${docker_volume}\${environment_name}\${rabbitmq_container_name}:/var/lib/rabbitmq
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.2.2
+    image: "rabbitmq:3.8.5-management"
   # Other Apps
   pgadmin4:
     container_name: ${environment_name}-${pgadmin_container_name}

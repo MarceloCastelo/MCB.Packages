@@ -7,6 +7,8 @@ $mongodb_container_name="mongodb"
 $ravendb_container_name="ravendb"
 $prometheus_container_name="prometheus"
 
+$rabbitmq_container_name="rabbitmq"
+
 $pgadmin_container_name="pgadmin"
 $mongoclient_container_name="mongoclient"
 $grafana_container_name="grafana"
@@ -20,6 +22,8 @@ $docker_config_path_postgresql = Join-Path -Path "${docker_config_path}" -ChildP
 $docker_config_path_mongodb = Join-Path -Path "${docker_config_path}" -ChildPath "${mongodb_container_name}"
 $docker_config_path_ravendb = Join-Path -Path "${docker_config_path}" -ChildPath "${ravendb_container_name}"
 $docker_config_path_prometheus = Join-Path -Path "${docker_config_path}" -ChildPath "${prometheus_container_name}"
+
+$docker_config_path_rabbitmq = Join-Path -Path "${docker_config_path}" -ChildPath "${rabbitmq_container_name}"
 
 $docker_config_path_pgadmin = Join-Path -Path "${docker_config_path}" -ChildPath "${docker_config_path_pgadmin}"
 $docker_config_path_mongoclient = Join-Path -Path "${docker_config_path}" -ChildPath "${docker_config_path_mongoclient}"
@@ -36,7 +40,8 @@ if(Test-Path -path $env_filename)
 { 
     Clear-Content $env_filename 
 }
-else {
+else 
+{
     if (!(Test-Path -path "..\generated\environments\${environment_name}")) { New-Item -ItemType Directory -Force -Path "..\generated\environments\${environment_name}" }
 }
 
@@ -44,6 +49,8 @@ Add-Content $env_filename "postgresql_container_name=${postgresql_container_name
 Add-Content $env_filename "mongodb_container_name=${mongodb_container_name}"
 Add-Content $env_filename "ravendb_container_name=${ravendb_container_name}"
 Add-Content $env_filename "prometheus_container_name=${prometheus_container_name}"
+
+Add-Content $env_filename "rabbitmq_container_name=${rabbitmq_container_name}"
 
 Add-Content $env_filename "pgadmin_container_name=${pgadmin_container_name}"
 Add-Content $env_filename "mongoclient_container_name=${mongoclient_container_name}"
@@ -59,6 +66,8 @@ Add-Content $env_filename "docker_config_path_mongodb=${docker_config_path_mongo
 Add-Content $env_filename "docker_config_path_ravendb=${docker_config_path_ravendb}"
 Add-Content $env_filename "docker_config_path_prometheus=${docker_config_path_prometheus}"
 
+Add-Content $env_filename "docker_config_path_rabbitmq=${docker_config_path_rabbitmq}"
+
 Add-Content $env_filename "docker_config_path_pgadmin=${docker_config_path_pgadmin}"
 Add-Content $env_filename "docker_config_path_mongoclient=${docker_config_path_mongoclient}"
 Add-Content $env_filename "docker_config_path_grafana=${docker_config_path_grafana}"
@@ -72,6 +81,8 @@ if (!(Test-Path -path $docker_config_path_postgresql)) { New-Item -ItemType Dire
 if (!(Test-Path -path $docker_config_path_mongodb)) { New-Item -ItemType Directory -Force -Path "$docker_config_path_mongodb" }
 if (!(Test-Path -path $docker_config_path_ravendb)) { New-Item -ItemType Directory -Force -Path "$docker_config_path_ravendb" }
 if (!(Test-Path -path $docker_config_path_prometheus)) { New-Item -ItemType Directory -Force -Path "$docker_config_path_prometheus" }
+
+if (!(Test-Path -path $docker_config_path_rabbitmq)) { New-Item -ItemType Directory -Force -Path "$docker_config_path_rabbitmq" }
 
 if (!(Test-Path -path $pgadmin_container_name)) { New-Item -ItemType Directory -Force -Path "$pgadmin_container_name" }
 if (!(Test-Path -path $mongoclient_container_name)) { New-Item -ItemType Directory -Force -Path "$mongoclient_container_name" }
@@ -93,6 +104,9 @@ if (Test-Path -path $ravendb_config_file) { Copy-Item "$ravendb_config_file\*" -
 
 $prometheus_config_file = "..\configs\${prometheus_container_name}"
 if (Test-Path -path $prometheus_config_file) { Copy-Item "$prometheus_config_file\*" -Destination $docker_config_path_prometheus }
+
+$rabbitmq_config_file = "..\configs\${rabbitmq_container_name}"
+if (Test-Path -path $rabbitmq_config_file) { Copy-Item "$rabbitmq_config_file\*" -Destination $docker_config_path_rabbitmq }
 
 $pgadmin_config_file = "..\configs\${pgadmin_container_name}"
 if (Test-Path -path $pgadmin_config_file) { Copy-Item "$pgadmin_config_file\*" -Destination $docker_config_path_pgadmin }

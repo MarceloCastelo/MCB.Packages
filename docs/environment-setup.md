@@ -60,6 +60,9 @@ Each environment have your own network, ports and ip address range.
 - Prometheus (<a href="http://localhost:6504" target="_blank">link</a>)
 - Grafana (<a href="http://localhost:6505" target="_blank">link</a>)
 
+2. Queues
+- RabbitMQ (<a href="http://localhost:6506" target="_blank">link</a>)
+
 ## **Networks**
 
 Each environment have your own network with the pattern: 172.xx.0.2 to 172.xx.255.255 where we call xx of **{ip_second_octect}**.
@@ -187,6 +190,55 @@ We will create the container with config:
 
 ## **Queues**
 
+This section constains all queues. The following table shows all queues config:
+
+| Description | IP | Port |
+|---|---|---|
+| RabbitMQ | 172.xxx.2.2 | y100 |
+
+**where**:
+- **xxx**: {ip_second_octect}
+- **y**: {environment_port_prefix}
+
+### **RabbitMQ**
+
+We will create the container with config:
+
+| Name | Value |
+|---|---|
+| Image | rabbitmq |
+| Name | xxx-rabbitmq |
+| Hostname | xxx-rabbitmq |
+| Username | guest |
+| Password | guest |
+| IP | 172.yyyy.2.2 |
+| Port binding | z100:5672 |
+| Port binding | z506:15672 |
+
+**where**:
+- **xxx**: {environment_name}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}
+
+### **PostgreSQL**
+
+We will create the container with config:
+
+| Name | Value |
+|---|---|
+| Image | postgres |
+| Name | xxx-postgresql |
+| Hostname | xxx-postgresql |
+| Username | admin |
+| Password | admin |
+| IP | 172.yyyy.0.2 |
+| Port binding | z000:5432 |
+
+**where**:
+- **xxx**: {environment_name}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}
+
 
 
 ## **WebAPIs**
@@ -272,3 +324,7 @@ We will create the container with config:
 - **xxx**: {environment_name}
 - **yyy**: {ip_second_octect}
 - **z**: {environment_port_prefix}
+
+### **RabbitMQ**
+
+RabbitMQ have our own management web interface. The web interface port **x506** are exposed by RabbitMQ container.
