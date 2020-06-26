@@ -1,0 +1,845 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": "-- Grafana --",
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "gnetId": null,
+    "graphTooltip": 0,
+    "id": 2,
+    "iteration": 1593135197673,
+    "links": [],
+    "panels": [
+      {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 10,
+        "fillGradient": 10,
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 0,
+          "y": 0
+        },
+        "hiddenSeries": false,
+        "id": 4,
+        "legend": {
+          "avg": false,
+          "current": true,
+          "hideEmpty": false,
+          "max": false,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": true,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "with report as\r\n(\r\n\tselect \tCAST(EXTRACT(EPOCH FROM \"TelemetryResult_ProcessDate\") as int) as time\r\n\t    ,\"TelemetryResult_Identifier\"\r\n\t\t\t,\"MaxTelemetryInfo_TotalOfMemoryKb\" as \"TotalMemory (Kb)\"\r\n\tfrom \tpublic.telemetry_result\r\n)\r\nselect \ttime\r\n        ,\"TotalMemory (Kb)\"\r\nfrom \treport\r\nwhere \"TelemetryResult_Identifier\" in ($test_identifier)",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Total of Memory (Kb) - MAX",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "Describe gen 0, gen 1 and gen 2 utilizations of garbage collector per test",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "fill": 10,
+        "fillGradient": 10,
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 8,
+          "y": 0
+        },
+        "hiddenSeries": false,
+        "id": 2,
+        "legend": {
+          "alignAsTable": false,
+          "avg": false,
+          "current": true,
+          "hideZero": false,
+          "max": false,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pluginVersion": "7.0.3",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "repeat": null,
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "with report as\r\n(\r\n\tselect \tCAST(EXTRACT(EPOCH FROM \"TelemetryResult_ProcessDate\") as int) as time\r\n\t    ,\"TelemetryResult_Identifier\"\r\n\t\t\t,\"MaxTelemetryInfo_Gen0\" as \"Gen 0\"\r\n\t\t\t,\"MaxTelemetryInfo_Gen1\" as \"Gen 1\"\r\n\t\t\t,\"MaxTelemetryInfo_Gen2\" as \"Gen 2\"\r\n\tfrom \tpublic.telemetry_result\r\n)\r\nselect \ttime\r\n        ,\"Gen 0\"\r\n        ,\"Gen 1\"\r\n        ,\"Gen 2\"\r\nfrom \treport\r\nwhere \"TelemetryResult_Identifier\" in ($test_identifier)",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "\"MaxTelemetryInfo_Gen0\""
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "telemetry_result",
+            "timeColumn": "\"MaxTelemetryInfo_Gen0\"",
+            "timeColumnType": "int4",
+            "where": [
+              {
+                "name": "$__unixEpochFilter",
+                "params": [],
+                "type": "macro"
+              },
+              {
+                "name": "",
+                "params": [
+                  "value",
+                  "=",
+                  "value"
+                ],
+                "type": "expression"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Garbage Collector - Generations - MAX",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 10,
+        "fillGradient": 10,
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 16,
+          "y": 0
+        },
+        "hiddenSeries": false,
+        "id": 6,
+        "legend": {
+          "avg": false,
+          "current": true,
+          "max": false,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "with report as\r\n(\r\n\tselect \tCAST(EXTRACT(EPOCH FROM \"TelemetryResult_ProcessDate\") as int) as time\r\n\t    ,\"TelemetryResult_Identifier\"\r\n\t\t\t,EXTRACT(MILLISECONDS FROM \"MaxTelemetryInfo_ExecutionTime\") as \"Execution Time\"\r\n\tfrom \tpublic.telemetry_result\r\n)\r\nselect \ttime\r\n        ,\"Execution Time\"\r\nfrom \treport\r\nwhere \"TelemetryResult_Identifier\" in ($test_identifier)",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Process - Execution Time - MAX",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 10,
+        "fillGradient": 10,
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 0,
+          "y": 8
+        },
+        "hiddenSeries": false,
+        "id": 7,
+        "legend": {
+          "avg": false,
+          "current": true,
+          "max": false,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "with report as\r\n(\r\n\tselect \tCAST(EXTRACT(EPOCH FROM \"TelemetryResult_ProcessDate\") as int) as time\r\n\t    ,\"TelemetryResult_Identifier\"\r\n\t\t\t,\"MedianTelemetryInfo_TotalOfMemoryKb\" as \"TotalMemory (Kb)\"\r\n\tfrom \tpublic.telemetry_result\r\n)\r\nselect \ttime\r\n        ,\"TotalMemory (Kb)\"\r\nfrom \treport\r\nwhere \"TelemetryResult_Identifier\" in ($test_identifier)",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Total of Memory (Kb) - MEDIAN",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "Describe gen 0, gen 1 and gen 2 utilizations of garbage collector per test",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {},
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "fill": 10,
+        "fillGradient": 10,
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 8,
+          "y": 8
+        },
+        "hiddenSeries": false,
+        "id": 8,
+        "legend": {
+          "alignAsTable": false,
+          "avg": false,
+          "current": true,
+          "hideZero": false,
+          "max": false,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pluginVersion": "7.0.3",
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "with report as\r\n(\r\n\tselect \tCAST(EXTRACT(EPOCH FROM \"TelemetryResult_ProcessDate\") as int) as time\r\n\t    ,\"TelemetryResult_Identifier\"\r\n\t\t\t,\"MedianTelemetryInfo_Gen0\" as \"Gen 0\"\r\n\t\t\t,\"MedianTelemetryInfo_Gen1\" as \"Gen 1\"\r\n\t\t\t,\"MedianTelemetryInfo_Gen2\" as \"Gen 2\"\r\n\tfrom \tpublic.telemetry_result\r\n)\r\nselect \ttime\r\n        ,\"Gen 0\"\r\n        ,\"Gen 1\"\r\n        ,\"Gen 2\"\r\nfrom \treport\r\nwhere \"TelemetryResult_Identifier\" in ($test_identifier)",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "\"MaxTelemetryInfo_Gen0\""
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "table": "telemetry_result",
+            "timeColumn": "\"MaxTelemetryInfo_Gen0\"",
+            "timeColumnType": "int4",
+            "where": [
+              {
+                "name": "$__unixEpochFilter",
+                "params": [],
+                "type": "macro"
+              },
+              {
+                "name": "",
+                "params": [
+                  "value",
+                  "=",
+                  "value"
+                ],
+                "type": "expression"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Garbage Collector - Generations - MEDIAN",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "custom": {}
+          },
+          "overrides": []
+        },
+        "fill": 10,
+        "fillGradient": 10,
+        "gridPos": {
+          "h": 8,
+          "w": 8,
+          "x": 16,
+          "y": 8
+        },
+        "hiddenSeries": false,
+        "id": 9,
+        "legend": {
+          "avg": false,
+          "current": true,
+          "max": false,
+          "min": false,
+          "rightSide": false,
+          "show": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "nullPointMode": "null",
+        "options": {
+          "dataLinks": []
+        },
+        "percentage": false,
+        "pointradius": 2,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "format": "time_series",
+            "group": [],
+            "metricColumn": "none",
+            "rawQuery": true,
+            "rawSql": "with report as\r\n(\r\n\tselect \tCAST(EXTRACT(EPOCH FROM \"TelemetryResult_ProcessDate\") as int) as time\r\n\t    ,\"TelemetryResult_Identifier\"\r\n\t\t\t,EXTRACT(MILLISECONDS FROM \"MedianTelemetryInfo_ExecutionTime\") as \"Execution Time\"\r\n\tfrom \tpublic.telemetry_result\r\n)\r\nselect \ttime\r\n        ,\"Execution Time\"\r\nfrom \treport\r\nwhere \"TelemetryResult_Identifier\" in ($test_identifier)",
+            "refId": "A",
+            "select": [
+              [
+                {
+                  "params": [
+                    "value"
+                  ],
+                  "type": "column"
+                }
+              ]
+            ],
+            "timeColumn": "time",
+            "where": [
+              {
+                "name": "$__timeFilter",
+                "params": [],
+                "type": "macro"
+              }
+            ]
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Process - Execution Time - MEDIAN",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 25,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": null,
+          "current": {
+            "selected": true,
+            "text": "PostgreSQLTestBaseTest_RunWithTelemetryWithTenExecution_Success",
+            "value": [
+              "PostgreSQLTestBaseTest_RunWithTelemetryWithTenExecution_Success"
+            ]
+          },
+          "datasource": "PostgreSQL",
+          "definition": "select distinct \"TelemetryResult_Identifier\" from public.telemetry_result",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Test Identifier",
+          "multi": true,
+          "name": "test_identifier",
+          "options": [
+            {
+              "selected": false,
+              "text": "PostgreSQLTestBaseTest_RunWithTelemetryWithTenExecution_Success",
+              "value": "PostgreSQLTestBaseTest_RunWithTelemetryWithTenExecution_Success"
+            },
+            {
+              "selected": true,
+              "text": "PostgreSQLTestBaseTest_RunWithTelemetryWithOneExecution_Success",
+              "value": "PostgreSQLTestBaseTest_RunWithTelemetryWithOneExecution_Success"
+            }
+          ],
+          "query": "select distinct \"TelemetryResult_Identifier\" from public.telemetry_result",
+          "refresh": 0,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tags": [],
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "Tests",
+    "uid": "B-fCYQZMk",
+    "version": 9
+  }
