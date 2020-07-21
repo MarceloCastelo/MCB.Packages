@@ -12,11 +12,16 @@ $rabbitmq_container_name="rabbitmq"
 $pgadmin_container_name="pgadmin"
 $mongoclient_container_name="mongoclient"
 $grafana_container_name="grafana"
+$sonarqube_container_name="sonarqube"
 
 $docker_volume = "C:\docker\volumes"
 $docker_volume_path = Join-Path -Path "${docker_volume}" -ChildPath "${environment_name}"
 $docker_config = "C:\docker\configs"
 $docker_config_path = Join-Path -Path "${docker_config}" -ChildPath "${environment_name}"
+$docker_log = "C:\docker\log"
+$docker_log_path = Join-Path -Path "${docker_log}" -ChildPath "${environment_name}"
+$docker_extensions = "C:\docker\extensions"
+$docker_extensions_path = Join-Path -Path "${docker_extensions}" -ChildPath "${environment_name}"
 
 $docker_config_path_postgresql = Join-Path -Path "${docker_config_path}" -ChildPath "${postgresql_container_name}"
 $docker_config_path_mongodb = Join-Path -Path "${docker_config_path}" -ChildPath "${mongodb_container_name}"
@@ -28,6 +33,10 @@ $docker_config_path_rabbitmq = Join-Path -Path "${docker_config_path}" -ChildPat
 $docker_config_path_pgadmin = Join-Path -Path "${docker_config_path}" -ChildPath "${docker_config_path_pgadmin}"
 $docker_config_path_mongoclient = Join-Path -Path "${docker_config_path}" -ChildPath "${docker_config_path_mongoclient}"
 $docker_config_path_grafana = Join-Path -Path "${docker_config_path}" -ChildPath "${grafana_container_name}"
+$docker_config_path_sonarqube = Join-Path -Path "${docker_config_path}" -ChildPath "${sonarqube_container_name}"
+
+$docker_extensions_path_sonarqube = Join-Path -Path "${docker_extensions_path}" -ChildPath "${sonarqube_container_name}"
+
 
 $env_filename="..\generated\environments\${environment_name}\.env"
 
@@ -55,11 +64,15 @@ Add-Content $env_filename "rabbitmq_container_name=${rabbitmq_container_name}"
 Add-Content $env_filename "pgadmin_container_name=${pgadmin_container_name}"
 Add-Content $env_filename "mongoclient_container_name=${mongoclient_container_name}"
 Add-Content $env_filename "grafana_container_name=${grafana_container_name}"
+Add-Content $env_filename "sonarqube_container_name=${sonarqube_container_name}"
 
 Add-Content $env_filename "environment_name=${environment_name}"
 Add-Content $env_filename "ip_second_octect=${ip_second_octect}"
 Add-Content $env_filename "environment_port_prefix=${environment_port_prefix}"
 Add-Content $env_filename "docker_volume=${docker_volume}"
+Add-Content $env_filename "docker_config=${docker_config}"
+Add-Content $env_filename "docker_log=${docker_log}"
+Add-Content $env_filename "docker_extensions=${docker_extensions}"
 
 Add-Content $env_filename "docker_config_path_postgresql=${docker_config_path_postgresql}"
 Add-Content $env_filename "docker_config_path_mongodb=${docker_config_path_mongodb}"
@@ -71,6 +84,9 @@ Add-Content $env_filename "docker_config_path_rabbitmq=${docker_config_path_rabb
 Add-Content $env_filename "docker_config_path_pgadmin=${docker_config_path_pgadmin}"
 Add-Content $env_filename "docker_config_path_mongoclient=${docker_config_path_mongoclient}"
 Add-Content $env_filename "docker_config_path_grafana=${docker_config_path_grafana}"
+Add-Content $env_filename "docker_config_path_sonarqube=${docker_config_path_sonarqube}"
+
+Add-Content $env_filename "docker_extensions_path_sonarqube=${docker_extensions_path_sonarqube}"
 
 #
 # create config directories
@@ -87,6 +103,7 @@ if (!(Test-Path -path $docker_config_path_rabbitmq)) { New-Item -ItemType Direct
 if (!(Test-Path -path $pgadmin_container_name)) { New-Item -ItemType Directory -Force -Path "$pgadmin_container_name" }
 if (!(Test-Path -path $mongoclient_container_name)) { New-Item -ItemType Directory -Force -Path "$mongoclient_container_name" }
 if (!(Test-Path -path $grafana_container_name)) { New-Item -ItemType Directory -Force -Path "$grafana_container_name" }
+if (!(Test-Path -path $sonarqube_container_name)) { New-Item -ItemType Directory -Force -Path "$sonarqube_container_name" }
 
 #
 # copy config files
@@ -115,7 +132,19 @@ $mongoclient_config_file = "..\configs\${mongoclient_container_name}"
 if (Test-Path -path $mongoclient_config_file) { Copy-Item "$mongoclient_config_file\*" -Destination $docker_config_path_mongoclient }
 
 $grafana_config_file = "..\configs\${grafana_container_name}"
-if (Test-Path -path $grafana_config_file) { Copy-Item "$grafana_config_file\*" -Destination $grafana_config_path_mongoclient }
+if (Test-Path -path $grafana_config_file) { Copy-Item "$grafana_config_file\*" -Destination $docker_config_path_grafana }
+
+$sonarqube_config_file = "..\configs\${sonarqube_container_name}"
+if (Test-Path -path $sonarqube_config_file) { Copy-Item "$sonarqube_config_file\*" -Destination $docker_config_path_sonarqube }
+
+#
+# extensions files
+#
+Write-Output "copy config files"
+
+$sonarqube_extensions_file = "..\extensions\${sonarqube_container_name}"
+if (Test-Path -path $sonarqube_extensions_file) { Copy-Item "$sonarqube_extensions_file\*" -Destination $docker_extensions_path_sonarqube }
+
 
 #
 # create network

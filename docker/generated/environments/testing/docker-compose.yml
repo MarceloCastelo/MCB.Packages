@@ -113,3 +113,17 @@ services:
       target_network:
         ipv4_address: 172.${ip_second_octect}.10.4
     image: "grafana/grafana"
+  sonarqube:
+    container_name: ${environment_name}-${sonarqube_container_name}
+    hostname: "${environment_name}-${sonarqube_container_name}"
+    ports: 
+      - ${environment_port_prefix}507:9000
+    volumes:
+      - ${docker_volume}\${environment_name}\${sonarqube_container_name}:/opt/sonarqube/data
+      - ${docker_log}\${environment_name}\${sonarqube_container_name}:/opt/sonarqube/logs
+      - ${docker_config}\${environment_name}\${sonarqube_container_name}:/opt/sonarqube/conf
+      - ${docker_extensions}\${environment_name}\${sonarqube_container_name}:/opt/sonarqube/extensions
+    networks:
+      target_network:
+        ipv4_address: 172.${ip_second_octect}.10.5
+    image: "sonarqube:8.2-community"

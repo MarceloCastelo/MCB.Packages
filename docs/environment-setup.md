@@ -63,6 +63,9 @@ Each environment have your own network, ports and ip address range.
 2. Queues
 - RabbitMQ (<a href="http://localhost:6506" target="_blank">link</a>)
 
+3. Other Apps
+- SonarQUBE (<a href="http://localhost:6507" target="_blank">link</a>)
+
 ## **Networks**
 
 Each environment have your own network with the pattern: 172.xx.0.2 to 172.xx.255.255 where we call xx of **{ip_second_octect}**.
@@ -328,3 +331,22 @@ We will create the container with config:
 ### **RabbitMQ**
 
 RabbitMQ have our own management web interface. The web interface port **x506** are exposed by RabbitMQ container.
+
+### **SonarQUBE**
+
+We will create the container with config:
+
+| Name | Value |
+|---|---|
+| Image | sonarqube:8.2-community |
+| Name | xxx-sonarqube |
+| Username | admin |
+| Password | admin |
+| Hostname | xxx-sonarqube |
+| IP | 172.yyyy.10.5 |
+| Port binding | z507:3000  |
+
+**where**:
+- **xxx**: {environment_name}
+- **yyy**: {ip_second_octect}
+- **z**: {environment_port_prefix}
