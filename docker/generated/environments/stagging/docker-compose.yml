@@ -3,127 +3,127 @@ version: '3'
 networks:
   target_network:
     external:
-      name: ${environment_name}
+      name: ${environmentName}
 
 services:
   # Databases and Caches
   postgresql:
-    container_name: ${environment_name}-${postgresql_container_name}
-    hostname: "${environment_name}-${postgresql_container_name}"
+    container_name: ${environmentName}-${postgresqlContainerName}
+    hostname: "${environmentName}-${postgresqlContainerName}"
     ports: 
-      - ${environment_port_prefix}000:5432
+      - ${environmentPortPrefix}000:5432
     environment: 
       POSTGRES_PASSWORD: "postgres"
     volumes:
-      - ${docker_volume}\${environment_name}\${postgresql_container_name}:/var/lib/postgresql/data
+      - ${postgresqlContainerVolumeDataPath}/:/var/lib/postgresql/data
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.0.2
+        ipv4_address: 172.${ipSecondOctect}.0.2
     image: "postgres"
   mongodb:
-    container_name: ${environment_name}-mongodb
-    hostname: "${environment_name}-mongodb"
+    container_name: ${environmentName}-${mongodbContainerName}
+    hostname: "${environmentName}-${mongodbContainerName}"
     ports: 
-      - ${environment_port_prefix}001:27017
+      - ${environmentPortPrefix}001:27017
     environment: 
       MONGO_INITDB_ROOT_USERNAME: "admin"
       MONGO_INITDB_ROOT_PASSWORD: "admin"
     volumes:
-      - ${docker_volume}\${environment_name}\${mongodb_container_name}:/data/db
+      - ${mongodbContainerVolumeDataPath}:/data/db
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.0.3
+        ipv4_address: 172.${ipSecondOctect}.0.3
     image: "mongo"
   ravendb:
-    container_name: ${environment_name}-${ravendb_container_name}
-    hostname: "${environment_name}-${ravendb_container_name}"
+    container_name: ${environmentName}-${ravendbContainerName}
+    hostname: "${environmentName}-${ravendbContainerName}"
     ports: 
-      - ${environment_port_prefix}002:38888
-      - ${environment_port_prefix}503:8080
+      - ${environmentPortPrefix}002:38888
+      - ${environmentPortPrefix}503:8080
     volumes:
-      - ${docker_config_path_ravendb}:/opt/RavenDB/config
-      - ${docker_volume}\${environment_name}\${ravendb_container_name}:/opt/RavenDB/Server/RavenData
+      - ${ravendbContainerVolumeConfigPath}:/opt/RavenDB/config
+      - ${ravendbContainerVolumeDataPath}:/opt/RavenDB/Server/RavenData
     environment: 
       RAVEN_Setup_Mode: "None"
       RAVEN_License_Eula_Accepted: "true"
       RAVEN_Security_UnsecuredAccessAllowed: "PrivateNetwork"
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.0.4
+        ipv4_address: 172.${ipSecondOctect}.0.4
     image: "ravendb/ravendb"
   prometheus:
-    container_name: ${environment_name}-${prometheus_container_name}
-    hostname: "${environment_name}-${prometheus_container_name}"
+    container_name: ${environmentName}-${prometheusContainerName}
+    hostname: "${environmentName}-${prometheusContainerName}"
     ports: 
-      - ${environment_port_prefix}504:9090
+      - ${environmentPortPrefix}504:9090
     volumes:
-      - ${docker_config_path_prometheus}:/prometheus
-      - ${docker_volume}\${environment_name}\${prometheus_container_name}:/data
+      - ${prometheusContainerVolumeConfigPath}:/prometheus
+      - ${prometheusContainerVolumeDataPath}:/data
     command:
       - '--config.file=/prometheus/prometheus.yml'
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.0.5
+        ipv4_address: 172.${ipSecondOctect}.0.5
     image: "prom/prometheus"
   # Queues
   rabbitmq:
-    container_name: ${environment_name}-${rabbitmq_container_name}
-    hostname: "${environment_name}-${rabbitmq_container_name}"
+    container_name: ${environmentName}-${rabbitmqContainerName}
+    hostname: "${environmentName}-${rabbitmqContainerName}"
     ports: 
-      - ${environment_port_prefix}100:5672
-      - ${environment_port_prefix}506:15672
+      - ${environmentPortPrefix}100:5672
+      - ${environmentPortPrefix}506:15672
     volumes:
-      - ${docker_volume}\${environment_name}\${rabbitmq_container_name}:/var/lib/rabbitmq
+      - ${rabbitmqContainerVolumeDataPath}:/var/lib/rabbitmq
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.2.2
+        ipv4_address: 172.${ipSecondOctect}.2.2
     image: "rabbitmq:3.8.5-management"
   # Other Apps
   pgadmin4:
-    container_name: ${environment_name}-${pgadmin_container_name}
-    hostname: "${environment_name}-${pgadmin_container_name}"
+    container_name: ${environmentName}-${pgadminContainerName}
+    hostname: "${environmentName}-${pgadminContainerName}"
     ports: 
-      - ${environment_port_prefix}500:80
+      - ${environmentPortPrefix}500:80
     environment: 
       PGADMIN_DEFAULT_EMAIL: "admin"
       PGADMIN_DEFAULT_PASSWORD: "admin"
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.10.2
+        ipv4_address: 172.${ipSecondOctect}.10.2
     image: "dpage/pgadmin4"
   mongoclient:
-    container_name: ${environment_name}-${mongoclient_container_name}
-    hostname: "${environment_name}-${mongoclient_container_name}"
+    container_name: ${environmentName}-${mongoclientContainerName}
+    hostname: "${environmentName}-${mongoclientContainerName}"
     ports: 
-      - ${environment_port_prefix}502:3000
+      - ${environmentPortPrefix}502:3000
     volumes:
-      - ${docker_volume}\${environment_name}\${mongoclient_container_name}:/data/db
+      - ${mongoclientContainerVolumeDataPath}:/data/db
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.10.3
+        ipv4_address: 172.${ipSecondOctect}.10.3
     image: "mongoclient/mongoclient"
   grafana:
-    container_name: ${environment_name}-${grafana_container_name}
-    hostname: "${environment_name}-${grafana_container_name}"
+    container_name: ${environmentName}-${grafanaContainerName}
+    hostname: "${environmentName}-${grafanaContainerName}"
     ports: 
-      - ${environment_port_prefix}505:3000
+      - ${environmentPortPrefix}505:3000
     volumes:
-      - ${docker_volume}\${environment_name}\${grafana_container_name}:/var/lib/grafana
+      - ${grafanaContainerVolumeDataPath}:/var/lib/grafana
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.10.4
+        ipv4_address: 172.${ipSecondOctect}.10.4
     image: "grafana/grafana"
   sonarqube:
-    container_name: ${environment_name}-${sonarqube_container_name}
-    hostname: "${environment_name}-${sonarqube_container_name}"
+    container_name: ${environmentName}-${sonarqubeContainerName}
+    hostname: "${environmentName}-${sonarqubeContainerName}"
     ports: 
-      - ${environment_port_prefix}507:9000
+      - ${environmentPortPrefix}507:9000
     volumes:
-      - ${docker_volume}\${environment_name}\${sonarqube_container_name}:/opt/sonarqube/data
-      - ${docker_log}\${environment_name}\${sonarqube_container_name}:/opt/sonarqube/logs
-      - ${docker_config}\${environment_name}\${sonarqube_container_name}:/opt/sonarqube/conf
-      - ${docker_extensions}\${environment_name}\${sonarqube_container_name}:/opt/sonarqube/extensions
+      - ${sonarqubeContainerVolumeDataPath}:/opt/sonarqube/data
+      - ${sonarqubeContainerVolumeLogPath}:/opt/sonarqube/logs
+      - ${sonarqubeContainerVolumeConfigPath}:/opt/sonarqube/conf
+      - ${sonarqubeContainerVolumeExtensionPath}:/opt/sonarqube/extensions
     networks:
       target_network:
-        ipv4_address: 172.${ip_second_octect}.10.5
+        ipv4_address: 172.${ipSecondOctect}.10.5
     image: "sonarqube:8.2-community"
