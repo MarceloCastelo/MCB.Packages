@@ -1,20 +1,40 @@
-# **Environment Setup**
+# **Criação do ambiente de desenvolvimento**
 
-### **Requirements**
-- Docker and Docker Compose installed and correctly running in your environment
-- Docker network's ip ranges available
-  - 172.18.xxx.xxx for developer network
-  - 172.19.xxx.xxx for testing network
-  - 172.20.xxx.xxx for stagging network
-  - 172.21.xxx.xxx for production network
+### **Requisitos**
+- Docker e Docker Compose instalados e em execução no ambiente
+- Faixas de IP disponíveis no Docker:
+  - 172.18.xxx.xxx para rede do ambiente developer
+  - 172.19.xxx.xxx para rede do ambiente testing
+  - 172.20.xxx.xxx para rede do ambiente stagging
+  - 172.21.xxx.xxx para rede do ambiente production
   
-- Docker network's port ranges available
-  - 6xxx for developer mappings
-  - 7xxx for testing mappings
-  - 8xxx for stagging mappings
-  - 9xxx for production mappings
+- Faixa de Portas disponíveis no Docker:
+  - 6xxx para os mapeamentos do ambiente developer
+  - 7xxx para os mapeamentos do ambiente testing
+  - 8xxx para os mapeamentos do ambiente stagging
+  - 9xxx para os mapeamentos do ambiente production
 
-### **Create Environment**
+### **Ambientes**
+
+Existem 4 ambientes que são criados. Os ambientes são:
+
+| Ambiente | Descrição |
+|---|---|
+| **development** | ambiente de desenvolvimento |
+| **testing** | ambiente de testes |
+| **stagging** | ambiente de pré-produção |
+| **production** | ambiente de produção |
+
+### **Criação dos ambientes**
+
+Para criação de cada ambiente, é necessário executar o comando <code>docker-compose.exe up -d</code> nos diretórios correspondentes a cada ambiente que possuí seus respectivos arquivos .env e docker-compose.yml, conforme lista abaixo:
+
+| Ambiente | Local |
+|---|---|
+| **development** | [link](..\..\generated\encironments\development) |
+| **testing** | [link](..\..\generated\encironments\testing) |
+| **stagging** | [link](..\..\generated\encironments\stagging) |
+| **production** | [link](..\..\generated\encironments\production) |
 
 In repository root folder, aopen the powershell with admin permission and run de following code to setup all environments:
 
