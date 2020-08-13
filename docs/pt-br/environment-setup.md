@@ -31,10 +31,10 @@ Para criação de cada ambiente, é necessário executar o comando <code>docker-
 
 | Ambiente | Local |
 |---|---|
-| **development** | [link](..\..\docker\generated\environments\development) |
-| **testing** | [link](..\..\docker\generated\environments\testing) |
-| **stagging** | [link](..\..\docker\generated\environments\stagging) |
-| **production** | [link](..\..\docker\generated\environments\production) |
+| **development** | docker\generated\environments\development |
+| **testing** | docker\generated\environments\testing |
+| **stagging** | docker\generated\environments\stagging |
+| **production** | docker\generated\environments\production |
 
 In repository root folder, aopen the powershell with admin permission and run de following code to setup all environments:
 
