@@ -1,6 +1,7 @@
 # **Criação do ambiente de desenvolvimento**
 
 ### **Requisitos**
+
 - Docker e Docker Compose instalados e em execução no ambiente
 - Faixas de IP disponíveis no Docker:
   - 172.18.xxx.xxx para rede do ambiente developer
@@ -27,7 +28,7 @@ Existem 4 ambientes que são criados. Os ambientes são:
 
 ### **Criação dos ambientes**
 
-Para criação de cada ambiente, é necessário executar o comando <code>docker-compose.exe up -d</code> nos diretórios correspondentes a cada ambiente que possuí seus respectivos arquivos .env e docker-compose.yml, conforme lista abaixo:
+Para criação de cada ambiente, é necessário executar o comando <code>docker-compose.exe up -d</code> nos diretórios correspondentes a cada ambiente que possuí seus respectivos arquivos .env e docker-compose.yml, conforme lista abaixo, porém, é necessário que as networks e diretórios estejam criados conforma a documentação.
 
 | Ambiente | Local |
 |---|---|
@@ -36,38 +37,20 @@ Para criação de cada ambiente, é necessário executar o comando <code>docker-
 | **stagging** | docker\generated\environments\stagging |
 | **production** | docker\generated\environments\production |
 
-In repository root folder, aopen the powershell with admin permission and run de following code to setup all environments:
+o conteúdo do diretório docker\generated foi criado por meio de scripts Powershell que fazem todo o preparativo e mapeamento dos volumes, docker networks, variáveis de ambiente do docker compose e criação dos containers por meio do docker compose. Os scripts para criação encontram-se em:
 
-1. <code>cd docker\scripts</code>
-2. <code>.\create-env-all.ps1</code>
-
-To setup individual environment, go to scripts folder like previous step 1 and run one of the following commands in Powershell:
-
-- Development
-  - <code>.\create-env-development.ps1</code>
-- Testing
-  - <code>.\create-env-testing.ps1</code>
-- Stagging
-  - <code>.\create-env-stagging.ps1</code>
-- Production
-  - <code>.\create-env-production.ps1</code>
-
-### **Base Variables**
-
-To set base variables, go to [set-env-base-variables.ps1](./../docker/scripts/set-env-base-variables.ps1)
-
-# **Environment Details**
-
-This project are divided in four environments. Wen call environment name of **{environment_name}**
-
-| Description | {environment_name} |
+| Ambiente | Local |
 |---|---|
-| Development | development |
-| Testing | testing |
-| Stagging | stagging |
-| Production | production |
+| **development** | docker\scripts\creation\create-env-development.ps1 |
+| **testing** | docker\scripts\creation\create-env-testing.ps1 |
+| **stagging** | docker\scripts\creation\create-env-stagging.ps1 |
+| **production** | docker\scripts\creation\create-env-production.ps1 |
+| **all** | docker\scripts\creation\create-env-all.ps1 |
 
-Each environment have your own network, ports and ip address range.
+Para executar o script de criação automático de todos os ambientes (ou de um ambiente específico que, para isso, troque para o script correspondente de acordo com a tabela acima), a partir do diretório raiz do projeto, execute os seguintes comnados:
+
+1. <code>cd docker\scripts\creation</code>
+2. <code>.\create-env-all.ps1</code>
 
 ## **Links**
 
